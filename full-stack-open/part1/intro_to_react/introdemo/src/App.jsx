@@ -1,9 +1,9 @@
-import ExercisesPhoneBook from "./pages/exercisesPhonebook"
+import FormNote from './pages/FormNote'
 
 const App = () => {
   return (
     <div>
-      <ExercisesPhoneBook />
+      <FormNote />
     </div>
   )
 }
