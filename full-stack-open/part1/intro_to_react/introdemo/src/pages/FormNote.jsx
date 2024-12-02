@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import Note from '../components/Note'
 import noteService from "../services/notes"
+import Notification from "../components/Notification"
+import Footer from "../components/Footer"
 
 // const notless = [
 //   {
@@ -24,6 +26,7 @@ const FormNote = () => {
   const [notes, setNotes] = useState([])
   const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState('some error happened...')
 
   useEffect(() => {
     noteService.getAll().then(initialNotes => {
@@ -66,9 +69,15 @@ const FormNote = () => {
       setNotes(notes.map(n => n.id === id ? returnedNote : n))
     // eslint-disable-next-line no-unused-vars
     }).catch(error => {
-      alert(
-        `the note '${note.content}' was already deleted from server`
+      // alert(
+      //   `the note '${note.content}' was already deleted from server`
+      // )
+      setErrorMessage(
+        `Note '${note.content}' was already removed from server`
       )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
       setNotes(notes.filter(n => n.id !== id))
     })
   }
@@ -77,6 +86,7 @@ const FormNote = () => {
     <div>
       <div>
         <h1>Notes</h1>
+        <Notification message={errorMessage} />
         <div>
           <button onClick={() => setShowAll(!showAll)}>
             show {showAll ? 'important' : 'all'}
@@ -95,6 +105,7 @@ const FormNote = () => {
           <button type="submit">save</button>
         </form>
       </div>
+      <Footer />
     </div>
   )
 }
