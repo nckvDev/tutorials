@@ -3,13 +3,14 @@ import Filter from "../../components/Filter"
 import PersonForm from "../../components/PersonForm"
 import Persons from "../../components/Persons"
 import phoneBookService from "../../services/phoneBook"
+import Notification from "../../components/Notification"
 
 const ExercisesPhoneBook = () => {
   const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [search, setSearch] = useState('')
-
+  const [message, setMessage] = useState({ status: null, content: null })
 
   useEffect(() => {
     phoneBookService.getAll().then((initialPhone) => {
@@ -41,6 +42,17 @@ const ExercisesPhoneBook = () => {
         setPersons(persons.map((person) => person.id === findPerson.id ? response : person))
         setNewName('')
         setPhoneNumber('')
+      }).catch(() => {
+        setMessage({
+          status: 'error',
+          content: `Information of ${newName} has already been remove from server`
+        })
+        setTimeout(() => {
+          setMessage({
+            status: null,
+            content: null
+          })
+        }, 3000)
       })
     } else {
       const newPersons = {
@@ -49,9 +61,19 @@ const ExercisesPhoneBook = () => {
       }
   
       phoneBookService.create(newPersons).then(response => {
+        setMessage({
+          status: 'success',
+          content: `Added ${response.name}`
+        })
         setPersons(persons.concat(response))
         setNewName('')
         setPhoneNumber('')
+        setTimeout(() => {
+          setMessage({
+            status: null,
+            content: null
+          })
+        }, 3000)
       })
     }
   }
@@ -101,6 +123,7 @@ const ExercisesPhoneBook = () => {
   return (
     <div>
       <h2>Phone Book</h2>
+      <Notification message={message} />
       <Filter text="filter shown with" search={search} handleSearch={handleSearch} />
       <h2>Add a new</h2>
       <PersonForm 

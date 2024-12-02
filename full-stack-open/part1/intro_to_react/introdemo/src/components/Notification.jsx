@@ -1,11 +1,11 @@
 const Notification = ({ message }) => {
-  if (message === null) {
+  if (message.status === null) {
     return null
   }
 
   return (
-    <div className='error'>
-      {message}
+    <div className={message.status}>
+      {message.content}
     </div>
   )
 }
