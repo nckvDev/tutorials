@@ -1,9 +1,9 @@
-import ExercisesPhoneBook from './pages/exercisesPhonebook'
+import ExchangeRate from './pages/ExchangeRate'
 
 const App = () => {
   return (
     <div>
-      <ExercisesPhoneBook />
+      <ExchangeRate />
     </div>
   )
 }
