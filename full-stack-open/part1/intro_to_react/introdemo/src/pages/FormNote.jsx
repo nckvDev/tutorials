@@ -64,6 +64,7 @@ const FormNote = () => {
 
     noteService.update(id, changedNote).then(returnedNote => {
       setNotes(notes.map(n => n.id === id ? returnedNote : n))
+    // eslint-disable-next-line no-unused-vars
     }).catch(error => {
       alert(
         `the note '${note.content}' was already deleted from server`
