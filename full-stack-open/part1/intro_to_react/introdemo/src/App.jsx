@@ -1,9 +1,9 @@
-import ExchangeRate from './pages/ExchangeRate'
+import ExercisesDataForCountries from './pages/exercisesDataForCountries'
 
 const App = () => {
   return (
     <div>
-      <ExchangeRate />
+      <ExercisesDataForCountries />
     </div>
   )
 }
