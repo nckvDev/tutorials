@@ -1,11 +1,13 @@
 
 const Persons = (props) => {
-  const { persons } = props
+  const { persons, handleDelete } = props
   return (
     <>
       {
         persons.map((value, index) => (
-          <div key={value.name + index}>{value.name} {value.number}</div>
+          <div key={value.name + index}>
+            {value.name} {value.number} <button onClick={() => handleDelete(value)}>delete</button>
+          </div>
         ))
       }  
     </>

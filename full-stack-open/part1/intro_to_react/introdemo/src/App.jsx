@@ -1,9 +1,9 @@
-import ExercisesPhoneBook from "./pages/exercisesPhonebook"
+import ExercisesDataForCountries from './pages/exercisesDataForCountries'
 
 const App = () => {
   return (
     <div>
-      <ExercisesPhoneBook />
+      <ExercisesDataForCountries />
     </div>
   )
 }
