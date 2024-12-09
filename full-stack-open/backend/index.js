@@ -1,7 +1,9 @@
+const { requestLogger, unknownEndpoint } = require('./middleware')
 const express = require('express')
 const app = express()
 
 app.use(express.json())
+app.use(requestLogger)
 
 let notes = [
   {
@@ -72,6 +74,8 @@ app.post('/api/notes', (request, response) => {
 
   response.json(note)
 })
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT, () => {
