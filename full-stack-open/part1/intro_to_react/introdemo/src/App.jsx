@@ -1,9 +1,9 @@
-import ExercisesDataForCountries from './pages/exercisesDataForCountries'
+import FormNote from './pages/FormNote'
 
 const App = () => {
   return (
     <div>
-      <ExercisesDataForCountries />
+      <FormNote />
     </div>
   )
 }
