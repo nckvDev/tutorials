@@ -1,9 +1,12 @@
-import FormNote from './pages/FormNote'
+// import FormNote from './pages/FormNote'
+
+import ExercisesPhoneBook from "./pages/exercisesPhoneBook"
 
 const App = () => {
   return (
     <div>
-      <FormNote />
+      {/* <FormNote /> */}
+      <ExercisesPhoneBook />
     </div>
   )
 }
