@@ -74,6 +74,11 @@ const ExercisesPhoneBook = () => {
             content: null
           })
         }, 3000)
+      }).catch((error) => {
+        setMessage({
+          status: 'error',
+          content: error.response.data.error
+        })
       })
     }
   }
@@ -115,7 +120,11 @@ const ExercisesPhoneBook = () => {
     const confirmDelete = window.confirm(`Delete ${value.name} ?`)
     if (confirmDelete) {
       phoneBookService.deletePhone(value.id).then((response) => {
-        setPersons(persons.filter(person => person.id !== response.id))
+        if (response.status === 204) {
+          setPersons(persons.filter(person => person.id !== value.id))
+        }
+      }).catch((error) => {
+        console.error(error);
       })
     }
   }
