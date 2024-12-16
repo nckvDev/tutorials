@@ -1,10 +1,10 @@
 const logger = require('./logger')
 
 /**
- * 
- * @param { Request } request 
- * @param { Response } response 
- * @param { * } next 
+ *
+ * @param { Request } request
+ * @param { Response } response
+ * @param { * } next
  */
 const requestLogger = (request, response, next) => {
   logger.info('Method: ', request.method)
@@ -15,21 +15,21 @@ const requestLogger = (request, response, next) => {
 }
 
 /**
- * 
- * @param { Request } request 
- * @param { Response } response 
+ *
+ * @param { Request } request
+ * @param { Response } response
  */
 const unknownEndpoint = (request, response) => {
   response.status(404).send({ error: 'unknown endpoint' })
 }
 
 /**
- * 
- * @param { Error } error 
- * @param { Request } request 
- * @param { Response } response 
- * @param { import('express').NextFunction } next 
- * @returns 
+ *
+ * @param { Error } error
+ * @param { Request } request
+ * @param { Response } response
+ * @param { import('express').NextFunction } next
+ * @returns
  */
 const errorHandler = (error, request, response, next) => {
   logger.error(error.message)
@@ -43,8 +43,8 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
-module.exports = { 
-  requestLogger, 
-  unknownEndpoint, 
-  errorHandler 
+module.exports = {
+  requestLogger,
+  unknownEndpoint,
+  errorHandler
 }
