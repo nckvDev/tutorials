@@ -36,7 +36,7 @@ phonesRouter.post('/', (request, response, next) => {
 
 phonesRouter.delete('/:id', (request, response, next) => {
   Phone.findByIdAndDelete(request.params.id)
-    .then((resp) => {
+    .then(() => {
       response.status(204).end()
     })
     .catch(error => next(error))
