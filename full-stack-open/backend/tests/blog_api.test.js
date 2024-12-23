@@ -2,7 +2,7 @@ const { test, after, describe, beforeEach } = require('node:test')
 const assert = require('node:assert')
 const mongoose = require('mongoose')
 const supertest = require('supertest')
-const helper = require('../tests/test_helper')
+const helper = require('./test_helper')
 const app = require('../app')
 const Blog = require('../models/blog')
 
@@ -45,7 +45,7 @@ describe('blogs', () => {
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
-    const blogsAtEnd = await helper.blogInDb()
+    const blogsAtEnd = await helper.blogsInDb()
 
     assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length + 1)
     const blogLasted = blogsAtEnd.pop()
@@ -69,7 +69,7 @@ describe('blogs', () => {
       .expect(201)
       .expect('Content-Type', /application\/json/)
 
-    const blogsAtEnd = await helper.blogInDb()
+    const blogsAtEnd = await helper.blogsInDb()
     const lastBlog = blogsAtEnd.pop()
 
     assert.strictEqual(lastBlog.likes, 0)
@@ -86,7 +86,7 @@ describe('blogs', () => {
       .send(newBlog)
       .expect(400)
 
-    const blogsAtEnd = await helper.blogInDb()
+    const blogsAtEnd = await helper.blogsInDb()
 
     assert.strictEqual(blogsAtEnd.length, helper.initialBlogs.length)
   })
