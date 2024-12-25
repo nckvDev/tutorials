@@ -10,7 +10,6 @@ import NoteForm from "../components/NoteForm"
 
 const FormNote = () => {
   const [notes, setNotes] = useState([])
-  const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
@@ -33,28 +32,14 @@ const FormNote = () => {
     }
   }, [])
 
-  const addNote = (event) => {
-    event.preventDefault()
-    const noteObject = {
-      content: newNote,
-      important: Math.random() < 0.5,
-      // id: String(notes.length + 1)
-    }
-
+  const addNote = (noteObject) => {
     noteService
     .create(noteObject)
     .then(returnedNote => {
-      // console.log(response)
       setNotes(notes.concat(returnedNote))
-      setNewNote('')
     })
     // setNotes(notes.concat(noteObject))
     // setNewNote('')
-  }
-
-  const handleNoteChange = (event) => {
-    console.log(event.target.value);
-    setNewNote(event.target.value)
   }
 
   const notesToShow = showAll ? notes : notes.filter(note => note.important)
@@ -67,9 +52,6 @@ const FormNote = () => {
       setNotes(notes.map(n => n.id === id ? returnedNote : n))
     // eslint-disable-next-line no-unused-vars
     }).catch(error => {
-      // alert(
-      //   `the note '${note.content}' was already deleted from server`
-      // )
       setErrorMessage(
         `Note '${note.content}' was already removed from server`
       )
@@ -102,6 +84,12 @@ const FormNote = () => {
     }
   }
 
+  const noteForm = () => (
+    <Toggled buttonLabel="new note">
+      <NoteForm createNote={addNote} />
+    </Toggled>
+  )
+
   const loginForm = () => {
     return (
       <div>
@@ -128,13 +116,7 @@ const FormNote = () => {
           loginForm() :
           <div>
             <p>{user?.name} logged-in</p>
-            <Toggled buttonLabel="new note">
-              <NoteForm
-                value={newNote} 
-                onSubmit={addNote} 
-                handleChange={handleNoteChange} 
-              />
-            </Toggled>
+            { noteForm() }
           </div>
         }
 
