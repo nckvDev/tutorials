@@ -62,5 +62,17 @@ export default [
       'react/prop-types': 0,
       'no-unused-vars': 0
     },
+    extends: [
+      'eslint:recommended',
+      'plugin:react/recommended',
+      'plugin:react/jsx-runtime',
+      'plugin:react-hooks/recommended',
+      'plugin:vitest-globals/recommended',
+    ],
+    env: {
+      browser: true,
+      es2020: true,
+      'vitest-globals/env': true
+    },
   },
 ]
