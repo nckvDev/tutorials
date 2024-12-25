@@ -99,7 +99,7 @@ const FormNote = () => {
   const loginForm = () => {
     return (
       <div>
-        <Toggled buttonLabel="login">
+        <Toggled buttonLabel="log in">
           <LoginForm
             username={username}
             password={password}
@@ -117,21 +117,6 @@ const FormNote = () => {
       <div>
         <h1>Notes</h1>
         <Notification message={errorMessage} />
-        <div>
-          <Toggled buttonLabel="1" ref={toggle1}>
-            first
-          </Toggled>
-
-          <Toggled buttonLabel="2" ref={toggle2}>
-            second
-          </Toggled>
-
-          <Toggled buttonLabel="3" ref={toggle3}>
-            third
-          </Toggled>
-
-          <Toggled> buttonLabel forgotten... </Toggled>
-        </div>
 
         { user === null ?
           loginForm() :
@@ -141,7 +126,7 @@ const FormNote = () => {
           </div>
         }
 
-        <h2>Notes</h2>
+        {/* <h2>Notes</h2> */}
 
         <div>
           <button onClick={() => setShowAll(!showAll)}>
