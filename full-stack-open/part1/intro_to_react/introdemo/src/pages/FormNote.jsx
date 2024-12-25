@@ -1,12 +1,12 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState } from 'react'
 import Note from '../components/Note'
-import noteService from "../services/notes"
-import Notification from "../components/Notification"
-import Footer from "../components/Footer"
-import loginService from "../services/login"
-import LoginForm from "../components/LoginForm"
-import Toggled from "../components/Toggled"
-import NoteForm from "../components/NoteForm"
+import noteService from '../services/notes'
+import Notification from '../components/Notification'
+import Footer from '../components/Footer'
+import loginService from '../services/login'
+import LoginForm from '../components/LoginForm'
+import Toggled from '../components/Toggled'
+import NoteForm from '../components/NoteForm'
 
 const FormNote = () => {
   const [notes, setNotes] = useState([])
@@ -17,6 +17,9 @@ const FormNote = () => {
   const [user, setUser] = useState(null)
 
   const noteFormRef = useRef()
+  const toggle1 = useRef()
+  const toggle2 = useRef()
+  const toggle3 = useRef()
 
   useEffect(() => {
     noteService.getAll().then(initialNotes => {
@@ -37,10 +40,10 @@ const FormNote = () => {
   const addNote = (noteObject) => {
     noteFormRef.current.toggleVisibility()
     noteService
-    .create(noteObject)
-    .then(returnedNote => {
-      setNotes(notes.concat(returnedNote))
-    })
+      .create(noteObject)
+      .then(returnedNote => {
+        setNotes(notes.concat(returnedNote))
+      })
     // setNotes(notes.concat(noteObject))
     // setNewNote('')
   }
@@ -53,7 +56,7 @@ const FormNote = () => {
 
     noteService.update(id, changedNote).then(returnedNote => {
       setNotes(notes.map(n => n.id === id ? returnedNote : n))
-    // eslint-disable-next-line no-unused-vars
+
     }).catch(error => {
       setErrorMessage(
         `Note '${note.content}' was already removed from server`
@@ -80,7 +83,7 @@ const FormNote = () => {
       setPassword('')
     } catch (exception) {
       console.error(exception)
-      setErrorMessage({ status: 'error', content: 'Wrong credentials'})
+      setErrorMessage({ status: 'error', content: 'Wrong credentials' })
       setTimeout(() => {
         setErrorMessage('')
       }, 5000)
@@ -97,7 +100,7 @@ const FormNote = () => {
     return (
       <div>
         <Toggled buttonLabel="login">
-          <LoginForm 
+          <LoginForm
             username={username}
             password={password}
             handleUsernameChange={({ target }) => setUsername(target.value)}
@@ -114,8 +117,23 @@ const FormNote = () => {
       <div>
         <h1>Notes</h1>
         <Notification message={errorMessage} />
+        <div>
+          <Toggled buttonLabel="1" ref={toggle1}>
+            first
+          </Toggled>
 
-        { user === null ? 
+          <Toggled buttonLabel="2" ref={toggle2}>
+            second
+          </Toggled>
+
+          <Toggled buttonLabel="3" ref={toggle3}>
+            third
+          </Toggled>
+
+          <Toggled> buttonLabel forgotten... </Toggled>
+        </div>
+
+        { user === null ?
           loginForm() :
           <div>
             <p>{user?.name} logged-in</p>
@@ -124,18 +142,18 @@ const FormNote = () => {
         }
 
         <h2>Notes</h2>
-        
+
         <div>
           <button onClick={() => setShowAll(!showAll)}>
             show {showAll ? 'important' : 'all'}
           </button>
         </div>
         <ul>
-          {notesToShow.map(note => 
-            <Note 
-              key={note.id} 
-              note={note} 
-              toggleImportance={() => toggleImportanceOf(note.id)} 
+          {notesToShow.map(note =>
+            <Note
+              key={note.id}
+              note={note}
+              toggleImportance={() => toggleImportanceOf(note.id)}
             />
           )}
         </ul>
