@@ -4,6 +4,9 @@ import noteService from "../services/notes"
 import Notification from "../components/Notification"
 import Footer from "../components/Footer"
 import loginService from "../services/login"
+import LoginForm from "../components/LoginForm"
+import Toggled from "../components/Toggled"
+import NoteForm from "../components/NoteForm"
 
 const FormNote = () => {
   const [notes, setNotes] = useState([])
@@ -99,40 +102,21 @@ const FormNote = () => {
     }
   }
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
+  const loginForm = () => {
+    return (
       <div>
-        username
-          <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
+        <Toggled buttonLabel="login">
+          <LoginForm 
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
+          />
+        </Toggled>
       </div>
-      <div>
-        password
-          <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>      
-  )
-
-  const noteForm = () => (
-    <form onSubmit={addNote}>
-      <input
-        value={newNote}
-        onChange={handleNoteChange}
-      />
-      <button type="submit">save</button>
-    </form>  
-  )
-
+    )
+  }
 
   return (
     <div>
@@ -144,7 +128,13 @@ const FormNote = () => {
           loginForm() :
           <div>
             <p>{user?.name} logged-in</p>
-            {noteForm()}
+            <Toggled buttonLabel="new note">
+              <NoteForm
+                value={newNote} 
+                onSubmit={addNote} 
+                handleChange={handleNoteChange} 
+              />
+            </Toggled>
           </div>
         }
 
@@ -157,7 +147,11 @@ const FormNote = () => {
         </div>
         <ul>
           {notesToShow.map(note => 
-            <Note key={note.id} note={note} toggleImportance={() => toggleImportanceOf(note.id)} />
+            <Note 
+              key={note.id} 
+              note={note} 
+              toggleImportance={() => toggleImportanceOf(note.id)} 
+            />
           )}
         </ul>
       </div>
