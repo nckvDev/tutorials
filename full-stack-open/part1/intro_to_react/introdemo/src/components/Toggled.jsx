@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { forwardRef, useImperativeHandle, useState } from "react"
 
-const Toggled = (props) => {
+// eslint-disable-next-line react/display-name
+const Toggled = forwardRef((props, refs) => {
   const [visible, setVisible] = useState(false)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
@@ -9,6 +10,12 @@ const Toggled = (props) => {
   const toggleVisibility = () => {
     setVisible(!visible)
   }
+
+  useImperativeHandle(refs, () => {
+    return {
+      toggleVisibility
+    }
+  })
 
   return (
     <div>
@@ -21,6 +28,6 @@ const Toggled = (props) => {
       </div>
     </div>
   )
-}
+})
 
 export default Toggled
