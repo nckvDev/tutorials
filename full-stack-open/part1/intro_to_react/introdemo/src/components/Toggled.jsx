@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types'
 import { forwardRef, useImperativeHandle, useState } from 'react'
 
-// eslint-disable-next-line react/display-name
 const Toggled = forwardRef((props, refs) => {
   const [visible, setVisible] = useState(false)
 
@@ -30,6 +29,8 @@ const Toggled = forwardRef((props, refs) => {
     </div>
   )
 })
+
+Toggled.displayName = 'Toggled'
 
 Toggled.propTypes = {
   buttonLabel: PropTypes.string.isRequired
