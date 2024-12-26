@@ -4,8 +4,8 @@ import { configureStore } from '@reduxjs/toolkit'
 import { Provider } from 'react-redux'
 import App from './App.jsx'
 
-import noteReducer, { createNote } from './reducers/noteReducer'
-import filterReducer, { filterChange } from './reducers/filterReducer'
+import noteReducer from './reducers/noteReducer'
+import filterReducer from './reducers/filterReducer'
 
 const store = configureStore({
   reducer: {
