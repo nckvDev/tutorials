@@ -9,7 +9,7 @@ const Persons = (props) => {
             {value.name} {value.number} <button onClick={() => handleDelete(value)}>delete</button>
           </div>
         ))
-      }  
+      }
     </>
   )
 }
