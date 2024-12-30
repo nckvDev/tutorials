@@ -1,0 +1,99 @@
+{
+  "notes": [
+    {
+      "id": "1",
+      "content": "HTML is easy",
+      "important": false
+    },
+    {
+      "id": "2",
+      "content": "Browser can execute only JavaScript",
+      "important": false
+    },
+    {
+      "id": "6744",
+      "content": "add note mutate query",
+      "important": false
+    },
+    {
+      "id": "b8bb",
+      "content": "test refetcj invalidateQuery",
+      "important": false
+    },
+    {
+      "id": "e9d0",
+      "content": "test againg",
+      "important": false
+    },
+    {
+      "id": "73eb",
+      "content": "I'm here",
+      "important": true
+    },
+    {
+      "id": "fd06",
+      "content": "natural water",
+      "important": false
+    },
+    {
+      "id": "cbdb",
+      "content": "helll",
+      "important": true
+    },
+    {
+      "id": "1660",
+      "content": "What is your name?",
+      "important": true
+    },
+    {
+      "id": "5ced",
+      "content": "df",
+      "important": true
+    },
+    {
+      "id": "ee3d",
+      "content": "test refec",
+      "important": true
+    },
+    {
+      "id": "63a9",
+      "content": "Hello tset",
+      "important": true
+    },
+    {
+      "id": "fdfd",
+      "content": "dd",
+      "important": true
+    },
+    {
+      "id": "6f7f",
+      "content": "gg",
+      "important": true
+    },
+    {
+      "id": "15f1",
+      "content": "hh",
+      "important": true
+    },
+    {
+      "id": "68b7",
+      "content": "TEst Again",
+      "important": true
+    },
+    {
+      "id": "0b98",
+      "content": "JH",
+      "important": true
+    },
+    {
+      "id": "4ce4",
+      "content": "ACMOL",
+      "important": true
+    },
+    {
+      "id": "df49",
+      "content": "AmiC",
+      "important": true
+    }
+  ]
+}
