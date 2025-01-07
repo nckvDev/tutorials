@@ -59,7 +59,7 @@ const Country = ({ country }) => {
   )
 }
 
-const App = () => {
+const CountryHookEx = () => {
   const nameInput = useField('text')
   const [name, setName] = useState('')
   const country = useCountry(name)
@@ -81,4 +81,4 @@ const App = () => {
   )
 }
 
-export default App
+export default CountryHookEx
