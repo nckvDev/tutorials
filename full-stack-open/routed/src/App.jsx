@@ -1,144 +1,169 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
+import { Link, Route, Routes, useMatch, useNavigate } from 'react-router-dom'
 
-import {
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  useNavigate,
-  useMatch,
-} from "react-router-dom"
-
-import './App.css'
-
-
-const Home = () => (
-  <div>
-    <h2>TKTL notes app</h2>
-    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry`s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-  </div>
-)
-
-const Note = ({ note }) => {
+const Menu = () => {
+  const padding = {
+    paddingRight: 5
+  }
   return (
     <div>
-      <h2>{note.content}</h2>
-      <div>{note.user}</div>
-      <div><strong>{note.important ? 'important' : ''}</strong></div>
+      <Link to='/' style={padding}>anecdotes</Link>
+      <Link to='/create' style={padding}>create new</Link>
+      <Link to='/about' style={padding}>about</Link>
     </div>
   )
 }
 
-const Notes = ({ notes }) => (
+const AnecdoteList = ({ anecdotes }) => (
   <div>
-    <h2>Notes</h2>
+    <h2>Anecdotes</h2>
     <ul>
-      {notes.map(note =>
-        <li key={note.id}>
-          <Link to={`/notes/${note.id}`}>{note.content}</Link>
+      {anecdotes.map(anecdote => 
+        <li key={anecdote.id} >
+          <Link to={`/anecdote/${anecdote.id}`}>
+            {anecdote.content}
+          </Link>
         </li>
       )}
     </ul>
   </div>
 )
 
-const Users = () => (
+const AnecdoteDetail = ({ anecdote }) => {
+  return (
+    <div>
+      <h2>{anecdote.content} by {anecdote.author}</h2>
+      <p>has {anecdote.votes} votes</p>
+      <p>for more info see <a href={anecdote.info}>{anecdote.info}</a></p>
+    </div>
+  )
+}
+
+const About = () => (
   <div>
-    <h2>TKTL notes app</h2>
-    <ul>
-      <li>Matti Luukkainen</li>
-      <li>Juha Tauriainen</li>
-      <li>Arto Hellas</li>
-    </ul>
+    <h2>About anecdote app</h2>
+    <p>According to Wikipedia:</p>
+
+    <em>An anecdote is a brief, revealing account of an individual person or an incident.
+      Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
+      such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
+      An anecdote is &quot;a story with a point.&quot;</em>
+
+    <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
   </div>
 )
 
-const Login = (props) => {
+const Footer = () => (
+  <div>
+    Anecdote app for <a href='https://fullstackopen.com/'>Full Stack Open</a>.
+
+    See <a href='https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js'>https://github.com/fullstack-hy2020/routed-anecdotes/blob/master/src/App.js</a> for the source code.
+  </div>
+)
+
+const CreateNew = (props) => {
+  const [content, setContent] = useState('')
+  const [author, setAuthor] = useState('')
+  const [info, setInfo] = useState('')
   const navigate = useNavigate()
 
-  const onSubmit = (event) => {
-    event.preventDefault()
-    props.onLogin('mluukkai')
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    props.addNew({
+      content,
+      author,
+      info,
+      votes: 0
+    })
     navigate('/')
   }
 
   return (
     <div>
-      <h2>login</h2>
-      <form onSubmit={onSubmit}>
+      <h2>create a new anecdote</h2>
+      <form onSubmit={handleSubmit}>
         <div>
-          username: <input />
+          content
+          <input name='content' value={content} onChange={(e) => setContent(e.target.value)} />
         </div>
         <div>
-          password: <input type='password' />
+          author
+          <input name='author' value={author} onChange={(e) => setAuthor(e.target.value)} />
         </div>
-        <button type="submit">login</button>
+        <div>
+          url for more info
+          <input name='info' value={info} onChange={(e)=> setInfo(e.target.value)} />
+        </div>
+        <button>create</button>
       </form>
     </div>
   )
 }
 
-function App() {
-  const [notes] = useState([
+const App = () => {
+  const [anecdotes, setAnecdotes] = useState([
     {
-      id: 1,
-      content: 'HTML is easy',
-      important: true,
-      user: 'Matti Luukkainen'
+      content: 'If it hurts, do it more often',
+      author: 'Jez Humble',
+      info: 'https://martinfowler.com/bliki/FrequencyReducesDifficulty.html',
+      votes: 0,
+      id: 1
     },
     {
-      id: 2,
-      content: 'Browser can execute only JavaScript',
-      important: false,
-      user: 'Matti Luukkainen'
-    },
-    {
-      id: 3,
-      content: 'Most important methods of HTTP-protocol are GET and POST',
-      important: true,
-      user: 'Arto Hellas'
+      content: 'Premature optimization is the root of all evil',
+      author: 'Donald Knuth',
+      info: 'http://wiki.c2.com/?PrematureOptimization',
+      votes: 0,
+      id: 2
     }
   ])
 
-  const [user, setUser] = useState(null)
+  const [notification, setNotification] = useState('')
 
-  const login = (user) => {
-    setUser(user)
+  const addNew = (anecdote) => {
+    anecdote.id = Math.round(Math.random() * 10000)
+    setAnecdotes(anecdotes.concat(anecdote))
+    setNotification(`a new anecdote ${anecdote.content} created!`)
+
+    setTimeout(() => {
+      setNotification('')
+    }, 5000)
   }
 
-  const padding = {
-    padding: 5
+  const anecdoteById = (id) =>
+    anecdotes.find(a => a.id === id)
+
+  // eslint-disable-next-line no-unused-vars
+  const vote = (id) => {
+    const anecdote = anecdoteById(id)
+
+    const voted = {
+      ...anecdote,
+      votes: anecdote.votes + 1
+    }
+
+    setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
 
-  const match = useMatch('/notes/:id')
-  const note = match 
-    ? notes.find(note => note.id === Number(match.params.id))
-    : null
+  const match = useMatch('/anecdote/:id')
+  const anecdote = match ? anecdotes.find(anecdote => anecdote.id === Number(match.params.id)) : null
 
   return (
     <div>
-      <div>
-        <Link style={padding} to="/">home</Link>
-        <Link style={padding} to="/notes">notes</Link>
-        <Link style={padding} to="/users">users</Link>
-        {user
-          ? <em>{user} logged in</em>
-          : <Link style={padding} to="/login">login</Link>
-        }
-      </div>
+      <h1>Software anecdotes</h1>
+      <Menu />
+      {notification}
 
       <Routes>
-        <Route path="/notes/:id" element={<Note note={note} />} />
-        <Route path="/notes" element={<Notes notes={notes} />} />
-        <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
-        <Route path="/login" element={<Login onLogin={login} />} />
-        <Route path="/" element={<Home />} />
+        <Route path='/' element={<AnecdoteList anecdotes={anecdotes} />} />
+        <Route path='/anecdote/:id' element={<AnecdoteDetail anecdote={anecdote} />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/create' element={<CreateNew addNew={addNew} />} />
       </Routes>
-      <div>
-        <br />
-        <em>Note app, Department of Computer Science 2024</em>
-      </div>
+      
+      <Footer />
     </div>
   )
 }
