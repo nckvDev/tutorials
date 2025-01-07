@@ -78,7 +78,7 @@ const Login = (props) => {
   )
 }
 
-function Learning() {
+function Router() {
   const [notes] = useState([
     {
       id: 1,
@@ -136,10 +136,10 @@ function Learning() {
       </Routes>
       <div>
         <br />
-        <em>Note Learning, Department of Computer Science 2024</em>
+        <em>Note Route, Department of Computer Science 2024</em>
       </div>
     </div>
   )
 }
 
-export default Learning
+export default Router
